@@ -6,24 +6,19 @@ export function ContactList() {
   const dispatch = useDispatch();
 
   const filter = useSelector(state => state.filter);
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts.items);
 
-  const filterContacts = () => {
-    if (filter) {
-      return contacts.filter(contact =>
-        contact.name.toLowerCase().includes(`${filter.toLowerCase()}`)
-      );
-    }
-    return contacts;
-  };
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <>
       <ContactsListStyle>
-        {filterContacts().map(contact => (
-          <ContactItem key={contact.id}>
-            {contact.name} <span>{contact.number} </span>
-            <Delete onClick={() => dispatch(removeContact(contact.id))}>
+        {filteredContacts.map(contact => (
+          <ContactItem key={contact?.id}>
+            {contact?.name} <span>{contact?.number} </span>
+            <Delete onClick={() => dispatch(removeContact(contact?.id))}>
               Delete
             </Delete>
           </ContactItem>
