@@ -1,8 +1,10 @@
-import PropTypes from 'prop-types';
-
+import { changeFilter } from 'store/filterSlice';
 import { FilterLabel, FilterInput } from './Filter.styles';
+import { useDispatch, useSelector } from 'react-redux';
 
-export function Filter({ handleChange, filter }) {
+export function Filter() {
+  const filter = useSelector(state => state.filter);
+  const dispatch = useDispatch();
   return (
     <>
       <FilterLabel>
@@ -10,15 +12,10 @@ export function Filter({ handleChange, filter }) {
         <FilterInput
           type="text"
           name="filter"
-          onChange={handleChange}
+          onChange={evt => dispatch(changeFilter(evt.target.value))}
           value={filter}
         />
       </FilterLabel>
     </>
   );
 }
-
-Filter.propTypes = {
-  handleChange: PropTypes.func.isRequired,
-  filter: PropTypes.string.isRequired,
-};
